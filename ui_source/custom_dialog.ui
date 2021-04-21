@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QFrame" name="main_dialog_frame">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>50</y>
+     <width>300</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+	color: whitel;
+	background-color: rgb(23, 23, 23);
+	border-radius: 7px;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="dialog_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>259</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	color: white;
+}</string>
+    </property>
+    <property name="text">
+     <string>did you mean</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exit_dialog">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>8</y>
+      <width>14</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background-color: rgb(255, 40, 54);
+	border-radius: 7px;
+	border: none
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>259</width>
+      <height>299</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:vertical {
+            border: 0px solid #999999;
+		
+		background-color: rgb(61, 61, 70);
+            width:8px;    
+            margin: 0px 0px 0px 0px;
+        }
+        QScrollBar::handle:vertical {         
+       
+            min-height: 10px;
+          	border: 0px solid red;
+			border-radius: 4px;
+	
+	background-color: rgb(50, 50, 50);
+        }
+        QScrollBar::add-line:vertical {       
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        QScrollBar::sub-line:vertical {
+            height: 0 px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }</string>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="dialog_scroll_content">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>259</width>
+       <height>299</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidgets {
+	background-color: rgb(49, 49, 49);
+}</string>
+     </property>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>231</width>
+        <height>281</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="dialog_layout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+      </layout>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
