@@ -4,6 +4,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QPropertyAnimation
 from PyQt5.QtGui import QPixmap, QPainter, QPainterPath, QColor
 from PyQt5.QtWidgets import QGraphicsEffect, QGraphicsOpacityEffect, QGraphicsDropShadowEffect, QPushButton
+from PyQt5.uic import loadUi
 
 from bck.Album import Album
 from bck.SpotifyClient import SpotifyClient
@@ -88,7 +89,7 @@ class entWin(QtWidgets.QMainWindow):
         cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
         sp_oauth = Oauth2Manager().create_spotify_oauth(cache_handler)
         self.spotify = spotipy.Spotify(auth_manager=sp_oauth)
-        print(self.spotify.me())
+        # print(self.spotify.me())
 
         try:
             verify_token = VerifyToken(session_cache_path())
@@ -96,7 +97,7 @@ class entWin(QtWidgets.QMainWindow):
                 verify_token.refresh_token()
 
             else:
-                print(verify_token.auth_manager.get_cached_token())
+                # print(verify_token.auth_manager.get_cached_token())
                 self.successful_auth = True
                 self.spotify_client = SpotifyClient(
                     verify_token.auth_manager.get_cached_token()['access_token'],
@@ -252,8 +253,11 @@ class mainWin(QtWidgets.QMainWindow):
         ###### SEARCH-STACKED:
         self.ui.exit_choose.clicked.connect(lambda: self.ui.music_stacked.setCurrentWidget(self.ui.init_search_page))
 
-        ###### SET PLAYLIST BUTTONS WITH HANDLES
-
+        ###### RMV-STACKED:
+        # 1st page of rmv_stacked -> return to main
+        self.ui.rmv_exit_playlist.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.music_main_frame))
+        self.ui.rmv_exit_specify.clicked.connect(lambda: self.rmv_stacked_to_finalize_rmv)
+        self.ui.exit_rmv.clicked.connect(lambda: self.exit_rmv)
         self.show()
 
     def reset_music_stacked(self, substack_to_set, stack_to_set):
@@ -268,6 +272,22 @@ class mainWin(QtWidgets.QMainWindow):
             self.ui.init_error_label.setVisible(False)
         self.ui.init_line_edit.clear()
         self.ui.music_stacked.setCurrentWidget(self.ui.init_search_page)
+
+    def rmv_stacked_to_finalize_rmv(self):
+        if self.ui.rmv_status_label.isVisible():
+            self.ui.rmv_status_label.setVisible(False)
+        # clear rmv_specify_artist scroll pane from artists suggestions
+        self.clear_artist_content()
+        # clear lineEdit of rmv_finalize_request
+        self.ui.rmv_line_edit.clear()
+        # open rmv_finalize page
+        self.ui.music_stacked.setCurrentWidget(self.ui.rmv_finalize_request)
+
+    def exit_rmv(self):
+        self.ui.rmv_status_label.setText("")
+        self.clear_artist_content()
+        self.ui.rmv_line_edit.clear()
+        self.ui.rmv_stacked.setCurrentWidget(self.ui.rmv_choose_playlist)
 
     def init_search(self):
         _successful = False
@@ -292,7 +312,7 @@ class mainWin(QtWidgets.QMainWindow):
 
         self.ui.scroll_content.setLayout(self.ui.verticalLayout)
 
-    # clear scroll content pane upon result_page launch
+    # clear scroll content pane from albums upon result_page launch
     def clear_choose_content(self):
         for i in reversed(range(0, self.ui.verticalLayout.count())):
             try:
@@ -304,10 +324,20 @@ class mainWin(QtWidgets.QMainWindow):
 
     # clear scroll content pane from playlists
     def clear_playlist_content(self):
-        for i in reversed(range(0, self.ui.rmv_vertical_layout.count())):
+        for i in reversed(range(0, self.ui.rmv_playlist_layout.count())):
             try:
-                _temp = self.ui.rmv_vertical_layout.itemAt(i).widget();
-                self.ui.rmv_vertical_layout.removeWidget(_temp)
+                _temp = self.ui.rmv_playlist_layout.itemAt(i).widget();
+                self.ui.rmv_playlist_layout.removeWidget(_temp)
+                _temp.setParent(None)
+            except TypeError as e:
+                print(e)
+
+    # clear scroll content pane from artists
+    def clear_artist_content(self):
+        for i in reversed(range(0, self.ui.rmv_specify_layout.count())):
+            try:
+                _temp = self.ui.rmv_specify_layout.itemAt(i).widget();
+                self.ui.rmv_specify_layout.removeWidget(_temp)
                 _temp.setParent(None)
             except TypeError as e:
                 print(e)
@@ -315,8 +345,9 @@ class mainWin(QtWidgets.QMainWindow):
     def show_results(self, album):
         self.handle_spotify.get_album_tracks(album)
         self.handle_spotify.get_tracks_features(album.tracks)
+
         _temp = self.handle_spotify.compare_album_to_top_tracks(album)
-        # self.value = _temp
+
         _temp = (round(_temp, 2))
         _album_cover = AcquireImage(album.cover, album.name)
         _pixmap = QPixmap(get_path(album.name))
@@ -347,9 +378,6 @@ class mainWin(QtWidgets.QMainWindow):
         self.ui.result_result.setText(
             album.__str__() + " matches your top 20 songs' features by " + str(round((_temp * 10), 2)) + "%")
 
-        # self.ui.result_bar.setEnabled(True)
-        # self._timer.timeout.connect(lambda: self.load)
-        # self._timer.start(10)
         self.ui.init_error_label.setVisible(False)
         self.clear_choose_content()
 
@@ -376,7 +404,7 @@ class mainWin(QtWidgets.QMainWindow):
     def populate_rmv_scroll_panel(self):
         # open rmv scene
         self.ui.stackedWidget.setCurrentWidget(self.ui.rmv_page)
-        # open corrent intro. rmv scene <- playlist choice
+        # open correct intro. rmv scene <- playlist choice
         self.ui.rmv_stacked.setCurrentWidget(self.ui.rmv_choose_playlist)
 
         _playlists = self.handle_spotify.get_user_playlists()
@@ -385,19 +413,25 @@ class mainWin(QtWidgets.QMainWindow):
             _pb.append(album_button(playlist.__str__()))
             _pb[count].clicked.connect(lambda checked, i = count: self.init_rmv(_playlists[i]))
 
-            self.ui.rmv_vertical_layout.addWidget(_pb[count])
+            self.ui.rmv_playlist_layout.addWidget(_pb[count])
 
-        self.ui.rmv_scroll_content.setLayout(self.ui.verticalLayout)
+        self.ui.rmv_playlist_scroll_content.setLayout(self.ui.rmv_playlist_layout)
 
     def init_rmv(self, playlist):
-        # open correct scene
+        # open correct scene upon successful playlist pick
+        # show album icon, prompt for input, init removal
         self.ui.rmv_stacked.setCurrentWidget(self.ui.rmv_finalize_request)
 
-        _playlist_cover = AcquireImage(self.spotify.playlist_cover_image(playlist.id)[0]['url'], playlist.__str__())
-        _pixmap = QPixmap(get_path(playlist.__str__()))
+        # set playlist miniature: if none acquired, use default
+        try:
+            _playlist_cover = AcquireImage(self.spotify.playlist_cover_image(playlist.id)[0]['url'], playlist.__str__())
+            _pixmap = QPixmap(get_path(playlist.__str__()))
+        except IndexError as e:
+            _pixmap = QPixmap(get_path("no_miniature.png"))
 
         self.ui.rmv_playlist_icon.setScaledContents(True)
 
+        # scale image
         _pixmap.scaled(
             self.ui.rmv_playlist_icon.width(),
             self.ui.rmv_playlist_icon.height(),
@@ -412,37 +446,91 @@ class mainWin(QtWidgets.QMainWindow):
         shadow.setBlurRadius(7)
         # adding shadow to the label
         self.ui.rmv_playlist_icon.setGraphicsEffect(shadow)
+
         # set playlist name to title
         self.ui.rmv_playlist_label.setText(playlist.__str__())
+        self.ui.rmv_status_label.setVisible(False)
 
+        # add on click method to rmv_init_btn: call launch method to verify input and proceed
+        self.ui.rmv_init_btn.clicked.connect(lambda x = playlist: self.launch_rmv_seq(x))
+
+    # used to init removal of songs
+    # if len of the list of artists > 1: prompt for user choice
+    # CLEAN CODE NON-COMPLIANT; ELIGIBLE FOR CONTEMPT ;\
+    def launch_rmv_seq(self, playlist):
         if self.ui.rmv_line_edit.text() != "":
             # get list of artists from query
-            _artists = self.handle_spotify.search_for_artists(self.ui.rmv_line_edit.text())
-
-            # populate dialog and open
-            self.populate_dialog_content(_artists, playlist)
-
-            #clear playlist_scroll content
-            self.clear_playlist_content()
+            _artists = self.handle_spotify.search_for_artist(self.ui.rmv_line_edit.text())
+            if len(_artists) > 1:
+                # get user to choose artist
+                self.populate_artist_content(_artists, playlist)
+            elif len(_artists) == 1:
+                # just one value returned; finalize the removal and present status
+                self.finalize_songs_by_given_artist_removal(_artists[0], playlist)
+                # _result = self.remove_all_artist_tracks_from_playlist(_artists[0], playlist)
+                # if _result[0]:
+                #     self.ui.rmv_status_label.setStyleSheet("color: green;")
+                #     self.ui.rmv_status_label.setText("removed "
+                #                                      + str(_result[1])
+                #                                      + " tracks by"
+                #                                      + _artists[0]
+                #                                      + " from "
+                #                                      + playlist
+                #                                      )
+                #     self.ui.rmv_status_label.setVisible(True)
+                #
+                # else:
+                #     # the case of no tracks by given artist is not catered for
+                #     self.ui.rmv_status_label.setStyleSheet("color: red;")
+                #     self.ui.rmv_status_label.setText("oops, something went wrong")
+                #     self.ui.rmv_status_label.setVisible(True)
+            else:
+                self.ui.rmv_status_label.setStyleSheet("color: yellow;")
+                self.ui.rmv_status_label.setText("seems like we didn't find anything :[")
         else:
             # no text was entered prior to method call
             self.ui.rmv_line_edit.clear()
             self.ui.rmv_status_label.setStyleSheet("color: red;")
             self.ui.rmv_status_label.setText("oops, try again")
 
-    def populate_dialog_content(self, artists, playlist):
-        if artists.length() == 1:
-            _results = self.remove_all_artist_tracks_from_playlist(playlist, artists[0])
-            if _results[0]:
-                self.ui.rmv_status_label.setStyleSheet("color: green;")
-                self.ui.rmv_status_label.setText("successfully deleted "
-                                                 + str(_results[1])
-                                                 + " tracks by "
-                                                 + artists[0]['name']
-                                                 )
+        # clear playlist_scroll content
+        self.clear_playlist_content()
+
+    # add buttons with artists to scroll pane;
+    def populate_artist_content(self, artists, playlist):
+        # set current page to request artist clarification
+        self.ui.rmv_stacked.setCurrentWidget(self.ui.rmv_specify_artist)
+        _pb = []
+        for count, playlist in enumerate(artists):
+            _pb.append(album_button(artists[count].name))
+            _pb[count].clicked.connect(lambda checked, i = count, target = playlist:
+                                       self.finalize_songs_by_given_artist_removal(artists[i], target)
+                                       )
+            self.ui.rmv_specify_layout.addWidget(_pb[count])
+
+        self.ui.rmv_specify_scroll_content.setLayout(self.ui.rmv_specify_layout)
+
+    # will prolly kms afterwards
+    def finalize_songs_by_given_artist_removal(self, artist, playlist):
+        _result = self.remove_all_artist_tracks_from_playlist(artist, playlist)
+        if _result[0]:
+            self.ui.rmv_status_label.setStyleSheet("color: green;")
+            self.ui.rmv_status_label.setText("removed "
+                                             + str(_result[1])
+                                             + " tracks by"
+                                             + artist
+                                             + " from "
+                                             + playlist
+                                             )
+            self.ui.rmv_status_label.setVisible(True)
+
         else:
-            _dialog = Ui_Dialog()
-            _dialog.setupUi(self)
+            # the case of no tracks by given artist is not catered for
+            self.ui.rmv_status_label.setStyleSheet("color: red;")
+            self.ui.rmv_status_label.setText("oops, something went wrong")
+            self.ui.rmv_status_label.setVisible(True)
+
+        self.ui.rmv_stacked.setCurrentWidget(self.ui.rmv_finalize_request)
 
     def quit_window(self):
         self.close()
@@ -461,6 +549,7 @@ class mainWin(QtWidgets.QMainWindow):
             return
         delta = event.pos() - self._old_pos
         self.move(self.pos() + delta)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

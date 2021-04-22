@@ -364,6 +364,7 @@ class Ui_mainWindow(object):
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(5)
         self.verticalLayout.setObjectName("verticalLayout")
         self.scrollArea.setWidget(self.scroll_content)
         self.music_stacked.addWidget(self.choose_search)
@@ -464,19 +465,37 @@ class Ui_mainWindow(object):
 "    background-color: rgb(61, 61, 70);\n"
 "}")
         self.rmv_choose_playlist.setObjectName("rmv_choose_playlist")
-        self.rmv_choose_label = QtWidgets.QLabel(self.rmv_choose_playlist)
-        self.rmv_choose_label.setGeometry(QtCore.QRect(40, 40, 291, 31))
-        font = QtGui.QFont()
-        font.setPointSize(25)
-        self.rmv_choose_label.setFont(font)
-        self.rmv_choose_label.setStyleSheet("QLabel{\n"
-"    color: white;\n"
-"\n"
+        self.rmv_choose_frame = QtWidgets.QFrame(self.rmv_choose_playlist)
+        self.rmv_choose_frame.setGeometry(QtCore.QRect(50, 20, 351, 331))
+        self.rmv_choose_frame.setStyleSheet("QFrame{\n"
+"    border-radius:15px;\n"
+"    \n"
+"background-color:rgb(61, 61, 70);\n"
 "}")
-        self.rmv_choose_label.setObjectName("rmv_choose_label")
-        self.rmv_scroll_area = QtWidgets.QScrollArea(self.rmv_choose_playlist)
-        self.rmv_scroll_area.setGeometry(QtCore.QRect(40, 80, 341, 261))
-        self.rmv_scroll_area.setStyleSheet("QScrollBar:vertical {\n"
+        self.rmv_choose_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.rmv_choose_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.rmv_choose_frame.setObjectName("rmv_choose_frame")
+        self.rmv_exit_playlist = QtWidgets.QPushButton(self.rmv_choose_frame)
+        self.rmv_exit_playlist.setGeometry(QtCore.QRect(280, 300, 61, 20))
+        self.rmv_exit_playlist.setStyleSheet("QPushButton{\n"
+"    color: black;\n"
+"    background-color: rgb(133, 255, 120);\n"
+"    border-radius: 7px;\n"
+"    border: none\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    color: black;\n"
+"    background-color: rgb(109, 207, 97);\n"
+"    border-radius: 7px;\n"
+"    border: none\n"
+"}")
+        self.rmv_exit_playlist.setCheckable(False)
+        self.rmv_exit_playlist.setDefault(False)
+        self.rmv_exit_playlist.setFlat(False)
+        self.rmv_exit_playlist.setObjectName("rmv_exit_playlist")
+        self.rmv_playlist_scroll = QtWidgets.QScrollArea(self.rmv_choose_frame)
+        self.rmv_playlist_scroll.setGeometry(QtCore.QRect(0, 60, 341, 201))
+        self.rmv_playlist_scroll.setStyleSheet("QScrollBar:vertical {\n"
 "            border: 0px solid #999999;\n"
 "        \n"
 "        background-color: rgb(61, 61, 70);\n"
@@ -501,19 +520,32 @@ class Ui_mainWindow(object):
 "            subcontrol-position: top;\n"
 "            subcontrol-origin: margin;\n"
 "        }")
-        self.rmv_scroll_area.setWidgetResizable(True)
-        self.rmv_scroll_area.setObjectName("rmv_scroll_area")
-        self.rmv_scroll_content = QtWidgets.QWidget()
-        self.rmv_scroll_content.setGeometry(QtCore.QRect(0, 0, 320, 261))
-        self.rmv_scroll_content.setMaximumSize(QtCore.QSize(320, 16777215))
-        self.rmv_scroll_content.setObjectName("rmv_scroll_content")
-        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.rmv_scroll_content)
-        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(0, 0, 331, 261))
-        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
-        self.rmv_vertical_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
-        self.rmv_vertical_layout.setContentsMargins(0, 0, 0, 0)
-        self.rmv_vertical_layout.setObjectName("rmv_vertical_layout")
-        self.rmv_scroll_area.setWidget(self.rmv_scroll_content)
+        self.rmv_playlist_scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.rmv_playlist_scroll.setWidgetResizable(True)
+        self.rmv_playlist_scroll.setObjectName("rmv_playlist_scroll")
+        self.rmv_playlist_scroll_content = QtWidgets.QWidget()
+        self.rmv_playlist_scroll_content.setGeometry(QtCore.QRect(0, 0, 320, 201))
+        self.rmv_playlist_scroll_content.setMaximumSize(QtCore.QSize(320, 16777215))
+        self.rmv_playlist_scroll_content.setObjectName("rmv_playlist_scroll_content")
+        self.verticalLayoutWidget_4 = QtWidgets.QWidget(self.rmv_playlist_scroll_content)
+        self.verticalLayoutWidget_4.setGeometry(QtCore.QRect(0, 0, 311, 201))
+        self.verticalLayoutWidget_4.setObjectName("verticalLayoutWidget_4")
+        self.rmv_playlist_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_4)
+        self.rmv_playlist_layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.rmv_playlist_layout.setContentsMargins(1, 1, 1, 1)
+        self.rmv_playlist_layout.setSpacing(5)
+        self.rmv_playlist_layout.setObjectName("rmv_playlist_layout")
+        self.rmv_playlist_scroll.setWidget(self.rmv_playlist_scroll_content)
+        self.rmv_choose_label = QtWidgets.QLabel(self.rmv_choose_frame)
+        self.rmv_choose_label.setGeometry(QtCore.QRect(0, 10, 291, 31))
+        font = QtGui.QFont()
+        font.setPointSize(25)
+        self.rmv_choose_label.setFont(font)
+        self.rmv_choose_label.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"\n"
+"}")
+        self.rmv_choose_label.setObjectName("rmv_choose_label")
         self.rmv_stacked.addWidget(self.rmv_choose_playlist)
         self.rmv_finalize_request = QtWidgets.QWidget()
         self.rmv_finalize_request.setObjectName("rmv_finalize_request")
@@ -569,13 +601,122 @@ class Ui_mainWindow(object):
 "}")
         self.rmv_status_label.setObjectName("rmv_status_label")
         self.rmv_stacked.addWidget(self.rmv_finalize_request)
+        self.rmv_specify_artist = QtWidgets.QWidget()
+        self.rmv_specify_artist.setObjectName("rmv_specify_artist")
+        self.rmv_specify_frame = QtWidgets.QFrame(self.rmv_specify_artist)
+        self.rmv_specify_frame.setGeometry(QtCore.QRect(50, 20, 351, 331))
+        self.rmv_specify_frame.setStyleSheet("QFrame{\n"
+"    border-radius:15px;\n"
+"    \n"
+"background-color:rgb(61, 61, 70);\n"
+"}")
+        self.rmv_specify_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.rmv_specify_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.rmv_specify_frame.setObjectName("rmv_specify_frame")
+        self.rmv_exit_specify = QtWidgets.QPushButton(self.rmv_specify_frame)
+        self.rmv_exit_specify.setGeometry(QtCore.QRect(280, 300, 61, 20))
+        self.rmv_exit_specify.setStyleSheet("QPushButton{\n"
+"    color: black;\n"
+"    background-color: rgb(133, 255, 120);\n"
+"    border-radius: 7px;\n"
+"    border: none\n"
+"}\n"
+"QPushButton:pressed{\n"
+"    color: black;\n"
+"    background-color: rgb(109, 207, 97);\n"
+"    border-radius: 7px;\n"
+"    border: none\n"
+"}")
+        self.rmv_exit_specify.setCheckable(False)
+        self.rmv_exit_specify.setDefault(False)
+        self.rmv_exit_specify.setFlat(False)
+        self.rmv_exit_specify.setObjectName("rmv_exit_specify")
+        self.rmv_specify_scroll = QtWidgets.QScrollArea(self.rmv_specify_frame)
+        self.rmv_specify_scroll.setGeometry(QtCore.QRect(0, 60, 341, 201))
+        self.rmv_specify_scroll.setStyleSheet("QScrollBar:vertical {\n"
+"            border: 0px solid #999999;\n"
+"        \n"
+"        background-color: rgb(61, 61, 70);\n"
+"            width:8px;    \n"
+"            margin: 0px 0px 0px 0px;\n"
+"        }\n"
+"        QScrollBar::handle:vertical {         \n"
+"       \n"
+"            min-height: 10px;\n"
+"              border: 0px solid red;\n"
+"            border-radius: 4px;\n"
+"        \n"
+"    background-color: rgb(36, 35, 41);\n"
+"        }\n"
+"        QScrollBar::add-line:vertical {       \n"
+"            height: 0px;\n"
+"            subcontrol-position: bottom;\n"
+"            subcontrol-origin: margin;\n"
+"        }\n"
+"        QScrollBar::sub-line:vertical {\n"
+"            height: 0 px;\n"
+"            subcontrol-position: top;\n"
+"            subcontrol-origin: margin;\n"
+"        }")
+        self.rmv_specify_scroll.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.rmv_specify_scroll.setWidgetResizable(True)
+        self.rmv_specify_scroll.setObjectName("rmv_specify_scroll")
+        self.rmv_specify_scroll_content = QtWidgets.QWidget()
+        self.rmv_specify_scroll_content.setGeometry(QtCore.QRect(0, 0, 320, 201))
+        self.rmv_specify_scroll_content.setMaximumSize(QtCore.QSize(320, 16777215))
+        self.rmv_specify_scroll_content.setStyleSheet("QScrollBar:vertical {\n"
+"            border: 0px solid #999999;\n"
+"        \n"
+"        background-color: rgb(61, 61, 70);\n"
+"            width:8px;    \n"
+"            margin: 0px 0px 0px 0px;\n"
+"        }\n"
+"        QScrollBar::handle:vertical {         \n"
+"       \n"
+"            min-height: 10px;\n"
+"              border: 0px solid red;\n"
+"            border-radius: 4px;\n"
+"        \n"
+"    background-color: rgb(36, 35, 41);\n"
+"        }\n"
+"        QScrollBar::add-line:vertical {       \n"
+"            height: 0px;\n"
+"            subcontrol-position: bottom;\n"
+"            subcontrol-origin: margin;\n"
+"        }\n"
+"        QScrollBar::sub-line:vertical {\n"
+"            height: 0 px;\n"
+"            subcontrol-position: top;\n"
+"            subcontrol-origin: margin;\n"
+"        }")
+        self.rmv_specify_scroll_content.setObjectName("rmv_specify_scroll_content")
+        self.verticalLayoutWidget_5 = QtWidgets.QWidget(self.rmv_specify_scroll_content)
+        self.verticalLayoutWidget_5.setGeometry(QtCore.QRect(0, 0, 311, 201))
+        self.verticalLayoutWidget_5.setObjectName("verticalLayoutWidget_5")
+        self.rmv_specify_layout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_5)
+        self.rmv_specify_layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.rmv_specify_layout.setContentsMargins(1, 1, 1, 1)
+        self.rmv_specify_layout.setSpacing(5)
+        self.rmv_specify_layout.setObjectName("rmv_specify_layout")
+        self.rmv_specify_scroll.setWidget(self.rmv_specify_scroll_content)
+        self.rmv_specify_label = QtWidgets.QLabel(self.rmv_specify_frame)
+        self.rmv_specify_label.setGeometry(QtCore.QRect(0, 10, 291, 31))
+        font = QtGui.QFont()
+        font.setPointSize(25)
+        self.rmv_specify_label.setFont(font)
+        self.rmv_specify_label.setStyleSheet("QLabel{\n"
+"    color: white;\n"
+"\n"
+"}")
+        self.rmv_specify_label.setObjectName("rmv_specify_label")
+        self.rmv_stacked.addWidget(self.rmv_specify_artist)
         self.stackedWidget.addWidget(self.rmv_page)
         mainWindow.setCentralWidget(self.centralLayout)
 
         self.retranslateUi(mainWindow)
-        self.stackedWidget.setCurrentIndex(0)
-        self.music_stacked.setCurrentIndex(0)
-        self.rmv_stacked.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(2)
+        self.music_stacked.setCurrentIndex(1)
+        self.rmv_stacked.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def retranslateUi(self, mainWindow):
@@ -593,10 +734,13 @@ class Ui_mainWindow(object):
         self.exit_choose.setText(_translate("mainWindow", "quit"))
         self.choose_label.setText(_translate("mainWindow", "Which one?"))
         self.reload_result.setText(_translate("mainWindow", "try again!"))
-        self.result_intro.setText(_translate("mainWindow", "HUJ"))
-        self.result_result.setText(_translate("mainWindow", "HUJ"))
+        self.result_intro.setText(_translate("mainWindow", "placeholder"))
+        self.result_result.setText(_translate("mainWindow", "placeholder"))
+        self.rmv_exit_playlist.setText(_translate("mainWindow", "quit"))
         self.rmv_choose_label.setText(_translate("mainWindow", "choose playlist to edit"))
         self.rmv_final_label.setText(_translate("mainWindow", "hmm, who\'s pain in the ass?"))
         self.rmv_init_btn.setText(_translate("mainWindow", "make them go!"))
         self.rmv_playlist_label.setText(_translate("mainWindow", "TextLabel"))
         self.rmv_status_label.setText(_translate("mainWindow", "TextLabel"))
+        self.rmv_exit_specify.setText(_translate("mainWindow", "quit"))
+        self.rmv_specify_label.setText(_translate("mainWindow", "hmmm, which one?"))
