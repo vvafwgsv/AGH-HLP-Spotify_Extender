@@ -589,16 +589,24 @@ class Ui_mainWindow(object):
         self.rmv_init_btn.setFlat(False)
         self.rmv_init_btn.setObjectName("rmv_init_btn")
         self.rmv_playlist_label = QtWidgets.QLabel(self.rmv_finalize_request)
-        self.rmv_playlist_label.setGeometry(QtCore.QRect(190, 50, 231, 21))
+        self.rmv_playlist_label.setGeometry(QtCore.QRect(190, 30, 241, 61))
+        font = QtGui.QFont()
+        font.setPointSize(18)
+        font.setBold(True)
+        self.rmv_playlist_label.setFont(font)
         self.rmv_playlist_label.setStyleSheet("QLabel {\n"
 "    color:white;\n"
 "}")
         self.rmv_playlist_label.setObjectName("rmv_playlist_label")
         self.rmv_status_label = QtWidgets.QLabel(self.rmv_finalize_request)
-        self.rmv_status_label.setGeometry(QtCore.QRect(190, 100, 231, 21))
+        self.rmv_status_label.setGeometry(QtCore.QRect(190, 100, 251, 61))
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.rmv_status_label.setFont(font)
         self.rmv_status_label.setStyleSheet("QLabel {\n"
 "    color:white;\n"
 "}")
+        self.rmv_status_label.setWordWrap(True)
         self.rmv_status_label.setObjectName("rmv_status_label")
         self.rmv_stacked.addWidget(self.rmv_finalize_request)
         self.rmv_specify_artist = QtWidgets.QWidget()
@@ -715,8 +723,8 @@ class Ui_mainWindow(object):
 
         self.retranslateUi(mainWindow)
         self.stackedWidget.setCurrentIndex(2)
-        self.music_stacked.setCurrentIndex(1)
-        self.rmv_stacked.setCurrentIndex(2)
+        self.music_stacked.setCurrentIndex(2)
+        self.rmv_stacked.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def retranslateUi(self, mainWindow):

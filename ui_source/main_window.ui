@@ -39,7 +39,7 @@
        <string notr="true">QFrame{
 	
 	background-color: rgb(29, 29, 33);
-	color: rgb(255, 94, 130);
+	color: rgb(133, 255, 120);
 	border-radius: 10px;
 }</string>
       </property>
@@ -53,7 +53,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>110</y>
+         <y>140</y>
          <width>661</width>
          <height>61</height>
         </rect>
@@ -64,33 +64,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;asystent 0.1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="description">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>190</y>
-         <width>661</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-	color: rgb(155, 99, 123);
-}</string>
-       </property>
-       <property name="text">
-        <string>open</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;asystent v0.2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -103,22 +77,23 @@
        <property name="geometry">
         <rect>
          <x>130</x>
-         <y>270</y>
+         <y>220</y>
          <width>411</width>
          <height>21</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">QProgressBar {
-	background-color: rgb(255, 136, 187);
-	color: rgb(200,200,200);
+	
+	color: rgb(255, 255, 255);
+
 	border-style: none;
 	border-radius: 10px;
 	text-alignment: center;
 }
 QProgressBar::chunk{
 border-radius: 10px;
-background-color: qlineargradient(spread:pad, x1:0.108374, y1:0.426136, x2:0.906, y2:0.403, stop:0 rgba(186, 96, 113, 255), stop:1 rgba(196, 71, 99, 255));
+	background-color: qlineargradient(spread:pad, x1:0, y1:0.523, x2:1, y2:0.494318, stop:0.00492611 rgba(184, 195, 179, 255), stop:1 rgba(63, 205, 0, 255));
 }</string>
        </property>
        <property name="value">
@@ -138,10 +113,21 @@ background-color: qlineargradient(spread:pad, x1:0.108374, y1:0.426136, x2:0.906
        <property name="geometry">
         <rect>
          <x>290</x>
-         <y>266</y>
+         <y>215</y>
          <width>91</width>
          <height>31</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+		color:white;
+	
+	background-color: rgb(23, 23, 23);
+		border-radius:7px;
+}QPushButton::pressed{
+	
+	background-color: rgb(41, 41, 41);
+}</string>
        </property>
        <property name="text">
         <string>yea</string>
@@ -164,7 +150,7 @@ background-color: qlineargradient(spread:pad, x1:0.108374, y1:0.426136, x2:0.906
 }</string>
        </property>
        <property name="text">
-        <string>X</string>
+        <string/>
        </property>
        <property name="checkable">
         <bool>false</bool>
@@ -176,11 +162,29 @@ background-color: qlineargradient(spread:pad, x1:0.108374, y1:0.426136, x2:0.906
         <bool>false</bool>
        </property>
       </widget>
-      <zorder>description</zorder>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>430</x>
+         <y>340</y>
+         <width>211</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>proudly :tf: presented by mświder, mzieba</string>
+       </property>
+      </widget>
       <zorder>name</zorder>
       <zorder>exitButton</zorder>
       <zorder>pb1</zorder>
       <zorder>triggerButton</zorder>
+      <zorder>label</zorder>
      </widget>
     </item>
    </layout>

@@ -26,42 +26,33 @@ class Ui_entryWindow(object):
         self.dropFrame.setStyleSheet("QFrame{\n"
 "    \n"
 "    background-color: rgb(29, 29, 33);\n"
-"    color: rgb(255, 94, 130);\n"
+"    color: rgb(133, 255, 120);\n"
 "    border-radius: 10px;\n"
 "}")
         self.dropFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.dropFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.dropFrame.setObjectName("dropFrame")
         self.name = QtWidgets.QLabel(self.dropFrame)
-        self.name.setGeometry(QtCore.QRect(0, 110, 661, 61))
+        self.name.setGeometry(QtCore.QRect(0, 140, 661, 61))
         font = QtGui.QFont()
         font.setPointSize(50)
         self.name.setFont(font)
         self.name.setAlignment(QtCore.Qt.AlignCenter)
         self.name.setObjectName("name")
-        self.description = QtWidgets.QLabel(self.dropFrame)
-        self.description.setGeometry(QtCore.QRect(0, 190, 661, 21))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.description.setFont(font)
-        self.description.setStyleSheet("QLabel{\n"
-"    color: rgb(155, 99, 123);\n"
-"}")
-        self.description.setAlignment(QtCore.Qt.AlignCenter)
-        self.description.setObjectName("description")
         self.pb1 = QtWidgets.QProgressBar(self.dropFrame)
         self.pb1.setEnabled(False)
-        self.pb1.setGeometry(QtCore.QRect(130, 270, 411, 21))
+        self.pb1.setGeometry(QtCore.QRect(130, 220, 411, 21))
         self.pb1.setStyleSheet("QProgressBar {\n"
-"    background-color: rgb(255, 136, 187);\n"
-"    color: rgb(200,200,200);\n"
+"    \n"
+"    color: rgb(255, 255, 255);\n"
+"\n"
 "    border-style: none;\n"
 "    border-radius: 10px;\n"
 "    text-alignment: center;\n"
 "}\n"
 "QProgressBar::chunk{\n"
 "border-radius: 10px;\n"
-"background-color: qlineargradient(spread:pad, x1:0.108374, y1:0.426136, x2:0.906, y2:0.403, stop:0 rgba(186, 96, 113, 255), stop:1 rgba(196, 71, 99, 255));\n"
+"    background-color: qlineargradient(spread:pad, x1:0, y1:0.523, x2:1, y2:0.494318, stop:0.00492611 rgba(184, 195, 179, 255), stop:1 rgba(63, 205, 0, 255));\n"
 "}")
         self.pb1.setProperty("value", 0)
         self.pb1.setAlignment(QtCore.Qt.AlignCenter)
@@ -69,7 +60,16 @@ class Ui_entryWindow(object):
         self.pb1.setInvertedAppearance(False)
         self.pb1.setObjectName("pb1")
         self.triggerButton = QtWidgets.QPushButton(self.dropFrame)
-        self.triggerButton.setGeometry(QtCore.QRect(290, 266, 91, 31))
+        self.triggerButton.setGeometry(QtCore.QRect(290, 215, 91, 31))
+        self.triggerButton.setStyleSheet("QPushButton{\n"
+"        color:white;\n"
+"    \n"
+"    background-color: rgb(23, 23, 23);\n"
+"        border-radius:7px;\n"
+"}QPushButton::pressed{\n"
+"    \n"
+"    background-color: rgb(41, 41, 41);\n"
+"}")
         self.triggerButton.setObjectName("triggerButton")
         self.exitButton = QtWidgets.QPushButton(self.dropFrame)
         self.exitButton.setGeometry(QtCore.QRect(640, 5, 14, 14))
@@ -78,15 +78,22 @@ class Ui_entryWindow(object):
 "    border-radius: 7px;\n"
 "    border: none\n"
 "}")
+        self.exitButton.setText("")
         self.exitButton.setCheckable(False)
         self.exitButton.setDefault(False)
         self.exitButton.setFlat(False)
         self.exitButton.setObjectName("exitButton")
-        self.description.raise_()
+        self.label = QtWidgets.QLabel(self.dropFrame)
+        self.label.setGeometry(QtCore.QRect(430, 340, 211, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
         self.name.raise_()
         self.exitButton.raise_()
         self.pb1.raise_()
         self.triggerButton.raise_()
+        self.label.raise_()
         self.horizontalLayout.addWidget(self.dropFrame)
         entryWindow.setCentralWidget(self.centralwidget)
 
@@ -96,7 +103,6 @@ class Ui_entryWindow(object):
     def retranslateUi(self, entryWindow):
         _translate = QtCore.QCoreApplication.translate
         entryWindow.setWindowTitle(_translate("entryWindow", "MainWindow"))
-        self.name.setText(_translate("entryWindow", "<html><head/><body><p><span style=\" font-weight:700;\">asystent 0.1</span></p></body></html>"))
-        self.description.setText(_translate("entryWindow", "open"))
+        self.name.setText(_translate("entryWindow", "<html><head/><body><p><span style=\" font-weight:700;\">asystent v0.2</span></p></body></html>"))
         self.triggerButton.setText(_translate("entryWindow", "yea"))
-        self.exitButton.setText(_translate("entryWindow", "X"))
+        self.label.setText(_translate("entryWindow", "proudly :tf: presented by mświder, mzieba"))
