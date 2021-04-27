@@ -252,7 +252,7 @@ class mainWin(QtWidgets.QMainWindow):
         # self.ui.exit_rmv.clicked.connect(lambda: self.exit_rmv_to_main)
 
         ###### SEARCH-STACKED:
-        self.ui.exit_choose.clicked.connect(lambda: self.ui.music_stacked.setCurrentWidget(self.ui.init_search_page))
+        self.ui.exit_choose.clicked.connect(self.music_stacked_to_init)
 
         ###### RMV-STACKED:
         # 1st page of rmv_stacked -> return to main
@@ -271,6 +271,7 @@ class mainWin(QtWidgets.QMainWindow):
     def music_stacked_to_init(self):
         if self.ui.init_error_label.isVisible():
             self.ui.init_error_label.setVisible(False)
+        self.clear_choose_content()
         self.ui.init_line_edit.clear()
         self.ui.music_stacked.setCurrentWidget(self.ui.init_search_page)
 

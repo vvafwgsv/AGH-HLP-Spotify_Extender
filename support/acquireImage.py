@@ -17,7 +17,7 @@ def get_path(name):
 
 
 def is_saved(name):
-    print(os.getcwd())
+    # print(os.getcwd())
     if name in os.listdir("./images/"):
         return True
     return False
